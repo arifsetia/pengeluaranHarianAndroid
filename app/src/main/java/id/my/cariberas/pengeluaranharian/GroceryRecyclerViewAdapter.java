@@ -16,6 +16,19 @@ public class GroceryRecyclerViewAdapter extends RecyclerView.Adapter<GroceryRecy
 
     private List<Grocery> groceryList = new ArrayList<>();
 
+    private ArrayList id_pengeluaran; //Digunakan untuk Nama
+    private ArrayList title; //Digunakan untuk Jurusan
+    private ArrayList fee; //Digunakan untuk Jurusan
+    private ArrayList tanggal; //Digunakan untuk Jurusan
+
+    //Membuat Konstruktor pada Class RecyclerViewAdapter
+    GroceryRecyclerViewAdapter(ArrayList id_pengeluaran, ArrayList title, ArrayList fee, ArrayList tanggal){
+        this.id_pengeluaran = id_pengeluaran;
+        this.title = title;
+        this.fee = fee;
+        this.tanggal = tanggal;
+    }
+
     @NonNull
     @Override
     public GroceryViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -44,7 +57,7 @@ public class GroceryRecyclerViewAdapter extends RecyclerView.Adapter<GroceryRecy
 
     static class GroceryViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView id_pengeluaran,title,fee,tanggal;
+        private TextView id_pengeluaran, title, fee, tanggal;
 
         public GroceryViewHolder(@NonNull View itemView) {
             super(itemView);

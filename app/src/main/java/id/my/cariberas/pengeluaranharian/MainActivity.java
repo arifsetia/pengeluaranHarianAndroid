@@ -2,9 +2,12 @@ package id.my.cariberas.pengeluaranharian;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -15,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -29,7 +33,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -43,25 +46,60 @@ public class MainActivity extends AppCompatActivity {
     String[] daftar;
     ListView listPengeluaran;
 
-    private RecyclerView rvPengeluaran;
-    private GroceryRecyclerViewAdapter groceryRecyclerViewAdapter;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
+
+    private ArrayList titleList;
+    private ArrayList feeList;
+    private ArrayList tanggalList;
+    private ArrayList idPengeluaranList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        rvPengeluaran = findViewById(R.id.rvPengeluaran);
-        rvPengeluaran.setLayoutManager(new LinearLayoutManager(this));
+        listPengeluaran = (ListView)findViewById(R.id.listView);
 
-        groceryRecyclerViewAdapter = new GroceryRecyclerViewAdapter();
-        rvPengeluaran.setAdapter(groceryRecyclerViewAdapter);
+        ma = this;
+        dbcenter = new DatabaseHelper(this);
+
+        RefreshList();
+
+
+
+        //add
+        FloatingActionButton floatingActionButton=findViewById(R.id.fab1);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Toast.makeText(MainActivity.this, "Floating Action Button Berhasil dibuat", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(MainActivity.this,TambahPengeluaranActivity.class);
+                startActivity(i);
+            }
+        });
+
+        //laporan lainnya
+        ImageView imageview1 = findViewById(R.id.btnLaporanLainnya);
+        imageview1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Toast.makeText(MainActivity.this, "Here is your Text",Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(MainActivity.this,LaporanLainnyaActivity.class);
+                startActivity(i);
+            }
+        });
+
+        listPengeluaran.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                HashMap<String,String> map =(HashMap)adapterView.getItemAtPosition(i);
+                String id_pem = map.get("id_pengeluaran").toString();
+            }
+        });
+
     }
-
-//    private void setData() {
-//        List<Grocery> dummyData = DummyGroceryData.groceryList();
-//        groceryRecyclerViewAdapter.updateData(dummyData);
-//    }
 
     public void RefreshList() {
         SQLiteDatabase db = dbcenter.getReadableDatabase();
@@ -70,8 +108,6 @@ public class MainActivity extends AppCompatActivity {
 
         cursor.moveToFirst();
         final String sfaf[] = new String[cursor.getCount()];
-
-
 
         ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
         for (int cc = 0; cc < cursor.getCount(); cc++) {
@@ -88,9 +124,14 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        List<Grocery> dummyData = DummyGroceryData.groceryList();
-        groceryRecyclerViewAdapter.updateData(dummyData);
+//        FrameLayout fLayout = (FrameLayout) findViewById(R.id.activity_to_do);
 
+        RecyclerView pengeluaranView = (RecyclerView)findViewById(R.id.rvPengeluaran);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        pengeluaranView.setLayoutManager(linearLayoutManager);
+        pengeluaranView.setHasFixedSize(true);
+
+        pengeluaranView.setAdapter();
 
 //        ListAdapter adapter = new SimpleAdapter(
 //                MainActivity.this, list, R.layout.row_list,
@@ -99,7 +140,4 @@ public class MainActivity extends AppCompatActivity {
 //
 //        listPengeluaran.setAdapter(adapter);
     }
-
-
-
 }
