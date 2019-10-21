@@ -17,75 +17,63 @@
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:background="@drawable/header_white"
-            android:padding="20dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="20dp">
+
             <TextView
                 android:id="@+id/totKet"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
+                android:text="Total Pengeluaran Anda Bulan Ini"
                 android:textColor="#000000"
-                android:textSize="12sp"
-                android:text="Total Pengeluaran Anda Bulan Ini"/>
+                android:textSize="12sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:text="Rp. 2500.000"
                 android:textColor="@color/blueColor"
                 android:textSize="35sp"
-                android:layout_marginTop="10dp"
                 android:textStyle="bold" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="15dp">
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="30dp"
-                    android:layout_marginTop="5dp">
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="30dp">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="8sp"
-                        android:textColor="#000000"
                         android:text="Laporan Pengeluaran Lainnya"
-                        />
+                        android:textColor="#000000"
+                        android:textSize="8sp" />
                 </LinearLayout>
 
 
                 <ImageView
+                    android:id="@+id/btnLaporanLainnya"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_arrow_forward_black_24dp"
                     android:layout_alignParentRight="true"
-                    android:id="@+id/btnLaporanLainnya"
-                    />
+                    android:src="@drawable/ic_arrow_forward_black_24dp" />
 
             </RelativeLayout>
 
         </LinearLayout>
 
-        <ScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/mRecyclerView"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
-        </ScrollView>
+
+
+
     </LinearLayout>
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
@@ -98,5 +86,22 @@
         app:elevation="6dp"
         android:backgroundTint="#ffffff"
         android:id="@+id/fab1"/>
+
+    <LinearLayout
+        android:layout_marginTop="180dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPengeluaran"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
