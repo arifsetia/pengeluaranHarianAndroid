@@ -1,143 +1,146 @@
 package id.my.cariberas.pengeluaranharian;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
+import android.widget.SearchView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MenuItemCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
-    // inisialisasi fab
-    private FloatingActionButton fab;
 
-    DatabaseHelper dbcenter;
-    public static MainActivity ma;
-    protected Cursor cursor;
+    private static final String TAG = MainActivity.class.getSimpleName();
 
-    String[] daftar;
-    ListView listPengeluaran;
-
-    private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
-
-    private ArrayList titleList;
-    private ArrayList feeList;
-    private ArrayList tanggalList;
-    private ArrayList idPengeluaranList;
+    private SqliteDatabase mDatabase;
+    private ArrayList<Contacts> allContacts=new ArrayList<>();
+    private ContactAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        listPengeluaran = (ListView)findViewById(R.id.listView);
+        FrameLayout fLayout = (FrameLayout) findViewById(R.id.activity_to_do);
 
-        ma = this;
-        dbcenter = new DatabaseHelper(this);
+        RecyclerView contactView = (RecyclerView)findViewById(R.id.rvPengeluaran);
 
-        RefreshList();
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        contactView.setLayoutManager(linearLayoutManager);
+        contactView.setHasFixedSize(true);
+        mDatabase = new SqliteDatabase(this);
+        allContacts = mDatabase.listContacts();
 
+        if(allContacts.size() > 0){
+            contactView.setVisibility(View.VISIBLE);
+            mAdapter = new ContactAdapter(this, allContacts);
+            contactView.setAdapter(mAdapter);
 
-
-        //add
-        FloatingActionButton floatingActionButton=findViewById(R.id.fab1);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Toast.makeText(MainActivity.this, "Floating Action Button Berhasil dibuat", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(MainActivity.this,TambahPengeluaranActivity.class);
-                startActivity(i);
-            }
-        });
-
-        //laporan lainnya
-        ImageView imageview1 = findViewById(R.id.btnLaporanLainnya);
-        imageview1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Toast.makeText(MainActivity.this, "Here is your Text",Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(MainActivity.this,LaporanLainnyaActivity.class);
-                startActivity(i);
-            }
-        });
-
-        listPengeluaran.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                HashMap<String,String> map =(HashMap)adapterView.getItemAtPosition(i);
-                String id_pem = map.get("id_pengeluaran").toString();
-            }
-        });
-
-    }
-
-    public void RefreshList() {
-        SQLiteDatabase db = dbcenter.getReadableDatabase();
-        cursor = db.rawQuery("SELECT * FROM tb_pengeluaran where category = 'pengeluaran'  order by id_pengeluaran DESC", null);
-        daftar = new String[cursor.getCount()];
-
-        cursor.moveToFirst();
-        final String sfaf[] = new String[cursor.getCount()];
-
-        ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
-        for (int cc = 0; cc < cursor.getCount(); cc++) {
-            cursor.moveToPosition(cc);
-            try {
-                HashMap<String, String> showData = new HashMap<String, String>();
-                showData.put("id_pengeluaran", cursor.getString(0).toString());
-                showData.put("title", cursor.getString(1).toString());
-                showData.put("date", cursor.getString(2).toString());
-                showData.put("fee", "Rp. "+cursor.getString(3).toString());
-                list.add(showData);
-            } catch (Exception e) {
-
-            }
+        }else {
+            contactView.setVisibility(View.GONE);
+            Toast.makeText(this, "There is no contact in the database. Start adding now", Toast.LENGTH_LONG).show();
         }
 
-//        FrameLayout fLayout = (FrameLayout) findViewById(R.id.activity_to_do);
-
-        RecyclerView pengeluaranView = (RecyclerView)findViewById(R.id.rvPengeluaran);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        pengeluaranView.setLayoutManager(linearLayoutManager);
-        pengeluaranView.setHasFixedSize(true);
-
-        pengeluaranView.setAdapter();
-
-//        ListAdapter adapter = new SimpleAdapter(
-//                MainActivity.this, list, R.layout.row_list,
-//                new String[]{"title", "date", "fee"},
-//                new int[]{R.id.tPengeluaran, R.id.tTanggal, R.id.tHarga});
-//
-//        listPengeluaran.setAdapter(adapter);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab1);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addTaskDialog();
+            }
+        });
     }
+
+    private void addTaskDialog(){
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View subView = inflater.inflate(R.layout.activity_tambah_pengeluaran, null);
+
+        final EditText titleField = (EditText)subView.findViewById(R.id.btnPengeluaranTambah);
+        final EditText feeField = (EditText)subView.findViewById(R.id.btnHargaTambah);
+        final EditText tanggalField = (EditText)subView.findViewById(R.id.btnTanggalTambah);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Add new CONTACT");
+        builder.setView(subView);
+        builder.create();
+
+        builder.setPositiveButton("ADD CONTACT", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                final String title = titleField.getText().toString();
+                final String fee = feeField.getText().toString();
+                final String tanggal = tanggalField.getText().toString();
+
+                if(TextUtils.isEmpty(title)){
+                    Toast.makeText(MainActivity.this, "Something went wrong. Check your input values", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Contacts newContact = new Contacts(title, fee, tanggal);
+                    mDatabase.addContacts(newContact);
+
+                    finish();
+                    startActivity(getIntent());
+                }
+            }
+        });
+
+        builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(MainActivity.this, "Task cancelled", Toast.LENGTH_LONG).show();
+            }
+        });
+        builder.show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(mDatabase != null){
+            mDatabase.close();
+        }
+    }
+
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+//
+//        MenuItem search = menu.findItem(R.id.search);
+//        SearchView searchView = (SearchView) MenuItemCompat.getActionView(search);
+//        search(searchView);
+//        return true;
+//    }
+//
+//    private void search(SearchView searchView) {
+//
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                if (mAdapter!=null)
+//                    mAdapter.getFilter().filter(newText);
+//                return true;
+//            }
+//        });
+//    }
 }
