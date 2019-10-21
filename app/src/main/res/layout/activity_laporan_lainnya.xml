@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bd_blue"
+    tools:context=".TambahPengeluaranActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dari"
+            android:textColor="#ffffff"/>
+        <EditText
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/layout_edittext"
+            android:layout_marginBottom="20dp"
+            android:padding="10dp"
+            android:id="@+id/tanggalDari"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sampai"
+            android:textColor="#ffffff"/>
+        <EditText
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/layout_edittext"
+            android:layout_marginBottom="20dp"
+            android:padding="10dp"
+            android:id="@+id/tanggalSampai"
+            />
+
+        <Button
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/layout_edittext"
+            android:text="LIHAT"
+            android:textColor="@color/blueColor"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
