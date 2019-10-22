@@ -3,9 +3,11 @@ package id.my.cariberas.pengeluaranharian;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
@@ -15,6 +17,7 @@ public class LaporanLainnyaActivity extends AppCompatActivity {
 
     DatePickerDialog picker;
     EditText eText,eText2;
+    Button btnLihat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +64,15 @@ public class LaporanLainnyaActivity extends AppCompatActivity {
                             }
                         }, year, month, day);
                 picker.show();
+            }
+        });
+
+        btnLihat = findViewById(R.id.btnLihatLaporanLainnya);
+        btnLihat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(LaporanLainnyaActivity.this,DetailLaporanLainnya.class);
+                startActivity(i);
             }
         });
 

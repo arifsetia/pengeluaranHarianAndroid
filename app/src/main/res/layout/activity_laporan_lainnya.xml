@@ -54,7 +54,8 @@
             android:textSize="18dp"
             android:textStyle="bold"
             android:paddingTop="15dp"
-            android:paddingBottom="15dp"/>
+            android:paddingBottom="15dp"
+            android:id="@+id/btnLihatLaporanLainnya"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
