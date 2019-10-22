@@ -6,12 +6,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.app.DatePickerDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,6 +22,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
@@ -56,6 +61,8 @@ public class MainActivity extends AppCompatActivity  implements GroceryRecyclerV
     AlertDialog.Builder dialog;
     LayoutInflater inflater;
     View dialogView;
+
+    DatePickerDialog picker;
 
     Locale localeID = new Locale("in", "ID");
     private NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(localeID);
@@ -187,26 +194,78 @@ public class MainActivity extends AppCompatActivity  implements GroceryRecyclerV
 
     public void onRecyclerLongClick(HashMap groceryList){
 
-        dialog = new AlertDialog.Builder(MainActivity.this);
-        inflater = getLayoutInflater();
-        dialogView = inflater.inflate(R.layout.activity_edit_data, null);
+//        dialog = new AlertDialog.Builder(MainActivity.this);
+//        inflater = getLayoutInflater();
+//        dialogView = inflater.inflate(R.layout.activity_edit_data, null);
 
-        dialog.setView(dialogView);
-        dialog.setCancelable(true);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.activity_edit_data,null);
+
+        builder.setView(dialogView);
+        builder.setCancelable(true);
+
+        final AlertDialog dialog = builder.create();
+
         final String id_pengeluaran = groceryList.get("id_pengeluaran").toString();
         final String title = groceryList.get("title").toString();
         final String date = groceryList.get("date").toString();
         final String fee = groceryList.get("fee").toString();
 
-//        EditText id_pengeluaran_edit = dialogView.findViewById(R.id.tPengeluaranEdit);
-        EditText titleEdit = dialogView.findViewById(R.id.tPengeluaranEdit);
-        EditText feeEdit = dialogView.findViewById(R.id.tHargaEdit);
-        EditText tanggalEdit = dialogView.findViewById(R.id.tTanggalEdit);
+        String currentString = fee;
+        String[] separated = currentString.split(". ");
+        final String feeBaru = separated[1].trim();
+
+        //        EditText id_pengeluaran_edit = dialogView.findViewById(R.id.tPengeluaranEdit);
+        final EditText titleEdit = dialogView.findViewById(R.id.tPengeluaranEdit);
+        final EditText feeEdit = dialogView.findViewById(R.id.tHargaEdit);
+        final EditText tanggalEdit = dialogView.findViewById(R.id.tTanggalEdit);
+        Button btnUpdate = dialogView.findViewById(R.id.btnUpdate);
+
+
+        //google calendar
+        tanggalEdit.setInputType(InputType.TYPE_NULL);
+        tanggalEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar cldr = Calendar.getInstance();
+                int day = cldr.get(Calendar.DAY_OF_MONTH);
+                int month = cldr.get(Calendar.MONTH);
+                int year = cldr.get(Calendar.YEAR);
+                // date picker dialog
+                picker = new DatePickerDialog(MainActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+//                                eText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                                tanggalEdit.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+                            }
+                        }, year, month, day);
+                picker.show();
+            }
+        });
 
         titleEdit.setText(title);
-        feeEdit.setText(fee);
+        feeEdit.setText(feeBaru);
         tanggalEdit.setText(date);
 
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SQLiteDatabase db = dbcenter.getReadableDatabase();
+                ContentValues cv = new ContentValues();
+                cv.put("title", titleEdit.getText().toString());
+                cv.put("date", tanggalEdit.getText().toString());
+                cv.put("fee", feeEdit.getText().toString());
+                db.update("tb_pengeluaran", cv, "id_pengeluaran="+id_pengeluaran, null);
+                cursor.moveToFirst();
+                Toast.makeText(MainActivity.this, "Data Berhasil Diupdate", Toast.LENGTH_SHORT).show();
+                GetPengeluaranBulanIni();
+                RefreshList();
+                dialog.dismiss();
+            }
+        });
         dialog.show();
     }
 
