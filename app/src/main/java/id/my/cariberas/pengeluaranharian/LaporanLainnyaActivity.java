@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -24,8 +25,11 @@ public class LaporanLainnyaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_laporan_lainnya);
 
+        eText = findViewById(R.id.tanggalDari);
+        eText2 = findViewById(R.id.tanggalSampai);
+
         //tanggal dari
-        eText=(EditText) findViewById(R.id.tanggalSampai);
+        eText=(EditText) findViewById(R.id.tanggalDari);
         eText.setInputType(InputType.TYPE_NULL);
         eText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,7 +50,7 @@ public class LaporanLainnyaActivity extends AppCompatActivity {
             }
         });
 
-        eText2=(EditText) findViewById(R.id.tanggalDari);
+        eText2=(EditText) findViewById(R.id.tanggalSampai);
         eText2.setInputType(InputType.TYPE_NULL);
         eText2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,14 +71,26 @@ public class LaporanLainnyaActivity extends AppCompatActivity {
             }
         });
 
-        btnLihat = findViewById(R.id.btnLihatLaporanLainnya);
-        btnLihat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(LaporanLainnyaActivity.this,DetailLaporanLainnya.class);
-                startActivity(i);
-            }
-        });
+            btnLihat = findViewById(R.id.btnLihatLaporanLainnya);
+            btnLihat.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (eText.getText().toString().equals("") || eText2.getText().toString().equals("")){
+                        Toast.makeText(LaporanLainnyaActivity.this,"Data tidak boleh kosong!!", Toast.LENGTH_SHORT ).show();
+                    }else {
+                        String tanggalAwal, tanggalAkhir;
+                        tanggalAwal = eText.getText().toString();
+                        tanggalAkhir = eText2.getText().toString();
+
+                        Intent i = new Intent(getApplicationContext(),DetailLaporanLainnya.class);
+                        i.putExtra("tanggalAwal", tanggalAwal);
+                        i.putExtra("tanggalAkhir", tanggalAkhir);
+                        startActivity(i);
+                    }
+
+                }
+            });
+
 
     }
 }
