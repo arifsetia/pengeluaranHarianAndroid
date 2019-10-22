@@ -14,7 +14,7 @@ import java.util.List;
 
 public class GroceryRecyclerViewAdapter extends RecyclerView.Adapter<GroceryRecyclerViewAdapter.GroceryViewHolder> {
 
-    private List<Grocery> groceryList = new ArrayList<>();
+    private List<Grocery> groceryList;
 
     private ArrayList id_pengeluaran; //Digunakan untuk Nama
     private ArrayList title; //Digunakan untuk Jurusan
@@ -22,12 +22,16 @@ public class GroceryRecyclerViewAdapter extends RecyclerView.Adapter<GroceryRecy
     private ArrayList tanggal; //Digunakan untuk Jurusan
 
     //Membuat Konstruktor pada Class RecyclerViewAdapter
-    GroceryRecyclerViewAdapter(ArrayList id_pengeluaran, ArrayList title, ArrayList fee, ArrayList tanggal){
-        this.id_pengeluaran = id_pengeluaran;
-        this.title = title;
-        this.fee = fee;
-        this.tanggal = tanggal;
+//    GroceryRecyclerViewAdapter(ArrayList id_pengeluaran, ArrayList title, ArrayList fee, ArrayList tanggal){
+//        this.id_pengeluaran = id_pengeluaran;
+//        this.title = title;
+//        this.fee = fee;
+//        this.tanggal = tanggal;
+//    }
+    public GroceryRecyclerViewAdapter(ArrayList<Grocery> groceryList) {
+        this.groceryList = groceryList;
     }
+
 
     @NonNull
     @Override

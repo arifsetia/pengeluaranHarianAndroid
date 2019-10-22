@@ -12,7 +12,7 @@ public class SqliteDatabase extends SQLiteOpenHelper {
 
     private	static final int DATABASE_VERSION =	1;
     private	static final String	DATABASE_NAME = "db_pengeluaran";
-    private	static final String TABLE_PENGELUARAN = "tb_pengeluaran";
+    private	static final String TABLE_PENGELUARAN = "adaw";
 
     private static final String COLUMN_ID = "id_pengeluaran";
     private static final String COLUMN_TITLE = "title";
@@ -67,11 +67,6 @@ public class SqliteDatabase extends SQLiteOpenHelper {
         values.put(COLUMN_TANGGAL, contacts.getTanggal());
         SQLiteDatabase db = this.getWritableDatabase();
         db.insert(TABLE_PENGELUARAN, null, values);
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        db.execSQL("insert into tb_pengeluaran(COLUMN_TITLE, COLUMN_FEE, COLUMN_TANGGAL, COLUMN_CATEGORY) values('" +
-//                contacts.getTitle() + "','" +
-//                contacts.getFee() + "','" +
-//                contacts.getTanggal() + "','pengeluaran')");
     }
 
     public void updateContacts(Contacts contacts){
