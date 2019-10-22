@@ -78,6 +78,7 @@ public class TambahPengeluaranActivity extends AppCompatActivity {
                             eHarga.getText().toString() + "','pengeluaran')");
                     Toast.makeText(getApplicationContext(), "Berhasil Disimpan", Toast.LENGTH_LONG).show();
                     MainActivity.ma.RefreshList();
+                    MainActivity.ma.GetPengeluaranBulanIni();
                     finish();
                 }
             }

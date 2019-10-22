@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -45,7 +46,8 @@ public class MainActivity extends AppCompatActivity {
     private GroceryRecyclerViewAdapter adapter;
     private ArrayList<Grocery> groceryArrayList;
 
-
+    Locale localeID = new Locale("in", "ID");
+    private NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(localeID);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
         RefreshList();
 
-        tTotalPengeluaran.setText(String.valueOf(GetPengeluaranBulanIni()));
-//        Toast.makeText(MainActivity.this, GetPengeluaranBulanIni(),Toast.LENGTH_SHORT).show();
+        tTotalPengeluaran.setText(String.valueOf(formatRupiah.format(GetPengeluaranBulanIni())));
         //add
         FloatingActionButton floatingActionButton=findViewById(R.id.fab1);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -93,11 +94,15 @@ public class MainActivity extends AppCompatActivity {
 
 
         groceryArrayList = new ArrayList<>();
+        SimpleDateFormat tglnya = new SimpleDateFormat("dd/mm/yyyy");
+
         for (int cc = 0; cc < cursor.getCount(); cc++) {
             cursor.moveToPosition(cc);
 
             try {
-                groceryArrayList.add(new Grocery(cursor.getString(0), cursor.getString(1), "Rp. "+cursor.getString(3), cursor.getString(2)));
+                String tglBaru = tglnya.format(cursor.getString(2));
+                Log.d("tanggal", "RefreshList: "+tglBaru);
+                groceryArrayList.add(new Grocery(cursor.getString(0), cursor.getString(1), formatRupiah.format(Integer.parseInt(cursor.getString(3))), tglBaru));
             } catch (Exception e) {
 
             }
@@ -115,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private int GetPengeluaranBulanIni(){
+    public int GetPengeluaranBulanIni(){
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
 
@@ -135,7 +140,6 @@ public class MainActivity extends AppCompatActivity {
         else
             pengeluaranBulanIni = -1;
         cursor.close();
-//        int pengeluaranBulanIni = 2;
         return pengeluaranBulanIni;
     }
 
