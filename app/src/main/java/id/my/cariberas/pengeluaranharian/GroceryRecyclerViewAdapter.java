@@ -16,42 +16,28 @@ public class GroceryRecyclerViewAdapter extends RecyclerView.Adapter<GroceryRecy
 
     private List<Grocery> groceryList;
 
-    private ArrayList id_pengeluaran; //Digunakan untuk Nama
-    private ArrayList title; //Digunakan untuk Jurusan
-    private ArrayList fee; //Digunakan untuk Jurusan
-    private ArrayList tanggal; //Digunakan untuk Jurusan
-
-    //Membuat Konstruktor pada Class RecyclerViewAdapter
-//    GroceryRecyclerViewAdapter(ArrayList id_pengeluaran, ArrayList title, ArrayList fee, ArrayList tanggal){
-//        this.id_pengeluaran = id_pengeluaran;
-//        this.title = title;
-//        this.fee = fee;
-//        this.tanggal = tanggal;
-//    }
     public GroceryRecyclerViewAdapter(ArrayList<Grocery> groceryList) {
         this.groceryList = groceryList;
     }
 
 
-    @NonNull
     @Override
-    public GroceryViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_list, viewGroup, false);
+    public GroceryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        View view = layoutInflater.inflate(R.layout.row_list, parent, false);
         return new GroceryViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull GroceryViewHolder groceryViewHolder, int i) {
-        Grocery grocery = groceryList.get(i);
-
-        groceryViewHolder.title.setText(grocery.getTitle());
-        groceryViewHolder.fee.setText(String.valueOf(grocery.getFee()));
-        groceryViewHolder.tanggal.setText(String.valueOf(grocery.getTanggal()));
+        groceryViewHolder.title.setText(groceryList.get(i).getTitle());
+        groceryViewHolder.fee.setText(groceryList.get(i).getFee());
+        groceryViewHolder.tanggal.setText(groceryList.get(i).getTanggal());
     }
 
     @Override
     public int getItemCount() {
-        return groceryList.size();
+        return (groceryList != null) ? groceryList.size() : 0;
     }
 
     public void updateData(List<Grocery> groceryList) {
@@ -61,7 +47,7 @@ public class GroceryRecyclerViewAdapter extends RecyclerView.Adapter<GroceryRecy
 
     static class GroceryViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView id_pengeluaran, title, fee, tanggal;
+        private TextView title, fee, tanggal;
 
         public GroceryViewHolder(@NonNull View itemView) {
             super(itemView);

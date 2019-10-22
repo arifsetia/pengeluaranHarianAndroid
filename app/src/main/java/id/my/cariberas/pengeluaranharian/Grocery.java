@@ -6,6 +6,8 @@ public class Grocery {
     public Grocery(String id_pengeluaran, String title, String fee, String tanggal) {
         this.id_pengeluaran = id_pengeluaran;
         this.title = title;
+        this.fee = fee;
+        this.tanggal = tanggal;
     }
 
     public String getId_pengeluaran() {
@@ -33,7 +35,7 @@ public class Grocery {
     }
 
     public String getTanggal() {
-        return title;
+        return tanggal;
     }
 
     public void setTanggal(String tanggal) {
