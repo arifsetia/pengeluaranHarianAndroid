@@ -25,8 +25,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
                 ");";
         Log.d("Data", "onCreate: " + sql);
         db.execSQL(sql);
-        sql = "INSERT INTO tb_pengeluaran (id_pengeluaran, title, date, fee, category) VALUES ('1', 'Traktir Temen', '2019-10-13', '225000','pengeluaran');";
-        db.execSQL(sql);
+//        sql = "INSERT INTO tb_pengeluaran (id_pengeluaran, title, date, fee, category) VALUES ('1', 'Traktir Temen', '2019-10-13', '225000','pengeluaran');";
+//        db.execSQL(sql);
 
     }
 

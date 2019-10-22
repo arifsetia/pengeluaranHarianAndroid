@@ -41,6 +41,7 @@
         android:layout_marginTop="-50dp"
         >
         <ImageView
+            android:id="@+id/btnHapus"
             android:layout_width="12dp"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_close_black_24dp"
