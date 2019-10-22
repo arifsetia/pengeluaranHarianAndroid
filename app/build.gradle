@@ -36,6 +36,5 @@ dependencies {
     // https://mvnrepository.com/artifact/androidx.swiperefreshlayout/swiperefreshlayout
     implementation group: 'androidx.swiperefreshlayout', name: 'swiperefreshlayout', version: '1.0.0-alpha1'
 
-
-
+    implementation 'com.google.android.material:material:1.0.0'
 }

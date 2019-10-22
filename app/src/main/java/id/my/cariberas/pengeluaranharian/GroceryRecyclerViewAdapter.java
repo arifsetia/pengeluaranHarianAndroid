@@ -1,27 +1,39 @@
 package id.my.cariberas.pengeluaranharian;
 
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.location.Address;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
-public class GroceryRecyclerViewAdapter extends RecyclerView.Adapter<GroceryRecyclerViewAdapter.GroceryViewHolder> {
+public class GroceryRecyclerViewAdapter extends RecyclerView.Adapter<GroceryRecyclerViewAdapter.GroceryViewHolder>{
 
-    private List<Grocery> groceryList;
+    //private List<Grocery> groceryList;
+    private ArrayList<HashMap> groceryList;
+    private RecyclerImageAdapter listener;
 
-    public GroceryRecyclerViewAdapter(ArrayList<Grocery> groceryList) {
+    public GroceryRecyclerViewAdapter(ArrayList<HashMap> groceryList, RecyclerImageAdapter listener) {
         this.groceryList = groceryList;
+        this.listener = listener;
     }
 
 
@@ -34,9 +46,10 @@ public class GroceryRecyclerViewAdapter extends RecyclerView.Adapter<GroceryRecy
 
     @Override
     public void onBindViewHolder(@NonNull GroceryViewHolder groceryViewHolder, int i) {
-        String xtgl = formateDateFromstring("yyyy-mm-dd", "EEE, dd MMM yy", groceryList.get(i).getTanggal().toString());
-        groceryViewHolder.title.setText(groceryList.get(i).getTitle());
-        groceryViewHolder.fee.setText(groceryList.get(i).getFee());
+        HashMap xData = groceryList.get(i);
+        String xtgl = formateDateFromstring("yyyy-mm-dd", "EEE, dd/mm/yy", xData.get("date").toString());
+        groceryViewHolder.title.setText(xData.get("title").toString());
+        groceryViewHolder.fee.setText(xData.get("fee").toString());
         groceryViewHolder.tanggal.setText(xtgl);
     }
 
@@ -45,19 +58,36 @@ public class GroceryRecyclerViewAdapter extends RecyclerView.Adapter<GroceryRecy
         return (groceryList != null) ? groceryList.size() : 0;
     }
 
-    public void updateData(List<Grocery> groceryList) {
-        this.groceryList = groceryList;
-        notifyDataSetChanged();
-    }
-
-    static class GroceryViewHolder extends RecyclerView.ViewHolder {
+    class GroceryViewHolder extends RecyclerView.ViewHolder {
         private TextView title, fee, tanggal;
+        ImageView btnHapus;
         public GroceryViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.tPengeluaran);
             fee = itemView.findViewById(R.id.tHarga);
             tanggal = itemView.findViewById(R.id.tTanggal);
+            btnHapus = itemView.findViewById(R.id.btnHapus);
+
+            btnHapus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onRecyclerImageSelected(groceryList.get(getAdapterPosition()));
+                }
+            });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    listener.onRecyclerLongClick(groceryList.get(getAdapterPosition()));
+                    return true;
+                }
+            });
         }
+    }
+
+    public interface RecyclerImageAdapter {
+        void onRecyclerImageSelected(HashMap groceryList);
+        void onRecyclerLongClick(HashMap groceryList);
     }
 
     public static String formateDateFromstring(String inputFormat, String outputFormat, String inputDate){
