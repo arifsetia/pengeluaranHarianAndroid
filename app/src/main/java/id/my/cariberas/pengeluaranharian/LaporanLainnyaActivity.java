@@ -12,13 +12,22 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class LaporanLainnyaActivity extends AppCompatActivity {
 
     DatePickerDialog picker;
     EditText eText,eText2;
     Button btnLihat;
+
+    private Pattern pattern;
+    private Matcher matcher;
+    private static final String DATE_PATTERN = "(0?[1-9]|1[012]) [/.-] (0?[1-9]|[12][0-9]|3[01]) [/.-] ((19|20)\\d\\d)";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,15 +91,34 @@ public class LaporanLainnyaActivity extends AppCompatActivity {
                         tanggalAwal = eText.getText().toString();
                         tanggalAkhir = eText2.getText().toString();
 
-                        Intent i = new Intent(getApplicationContext(),DetailLaporanLainnya.class);
-                        i.putExtra("tanggalAwal", tanggalAwal);
-                        i.putExtra("tanggalAkhir", tanggalAkhir);
-                        startActivity(i);
+                        if(!isValidDate(eText.getText().toString()) || !isValidDate(eText2.getText().toString())){
+                            Toast.makeText(LaporanLainnyaActivity.this,"Gunakan format tanggal (YYYY-mm-dd)!", Toast.LENGTH_SHORT ).show();
+                        }else{
+                            Intent i = new Intent(getApplicationContext(),DetailLaporanLainnya.class);
+                            i.putExtra("tanggalAwal", tanggalAwal);
+                            i.putExtra("tanggalAkhir", tanggalAkhir);
+                            startActivity(i);
+                        }
                     }
-
                 }
             });
+    }
 
-
+    public boolean isValidDate(String date)
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+        Date testDate = null;
+        String errorMessage;
+        try {
+            testDate = sdf.parse(date);
+        }
+        catch (ParseException e) {
+            return false;
+        }
+        if (!sdf.format(testDate).equals(date))
+        {
+            return false;
+        }
+        return true;
     }
 }

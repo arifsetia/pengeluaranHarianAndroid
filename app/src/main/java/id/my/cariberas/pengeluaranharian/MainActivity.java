@@ -2,6 +2,7 @@ package id.my.cariberas.pengeluaranharian;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -44,6 +45,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity  implements GroceryRecyclerViewAdapter.RecyclerImageAdapter{
     // inisialisasi fab
@@ -66,11 +69,21 @@ public class MainActivity extends AppCompatActivity  implements GroceryRecyclerV
 
     Locale localeID = new Locale("in", "ID");
     private NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(localeID);
+    private NestedScrollView nested_scrool_view;
+
+
+
+    private static final String DATE_PATTERN =
+            "(0?[1-9]|1[012]) [/.-] (0?[1-9]|[12][0-9]|3[01]) [/.-] ((19|20)\\d\\d)";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        nested_scrool_view = findViewById(R.id.nested_scroll_view);
+
         ma = this;
         dbcenter = new DatabaseHelper(this);
         GetPengeluaranBulanIni();
@@ -109,7 +122,7 @@ public class MainActivity extends AppCompatActivity  implements GroceryRecyclerV
 
     public void RefreshList() {
         SQLiteDatabase db = dbcenter.getReadableDatabase();
-        cursor = db.rawQuery("SELECT * FROM tb_pengeluaran where category = 'pengeluaran'  order by id_pengeluaran DESC LIMIT 20", null);
+        cursor = db.rawQuery("SELECT * FROM tb_pengeluaran where category = 'pengeluaran'  order by id_pengeluaran DESC LIMIT 50", null);
         cursor.moveToFirst();
         //groceryArrayList = new ArrayList<>();
 
@@ -137,9 +150,15 @@ public class MainActivity extends AppCompatActivity  implements GroceryRecyclerV
         }
 
         recyclerView = (RecyclerView) findViewById(R.id.rvPengeluaran);
+
+        recyclerView.setFocusable(false);
+        recyclerView.setNestedScrollingEnabled(false);
+
         adapter = new GroceryRecyclerViewAdapter(new ArrayList<HashMap>(list), this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
+        layoutManager.setAutoMeasureEnabled(true);
         recyclerView.setLayoutManager(layoutManager);
+
         recyclerView.setAdapter(adapter);
     }
 
@@ -268,5 +287,7 @@ public class MainActivity extends AppCompatActivity  implements GroceryRecyclerV
         });
         dialog.show();
     }
+
+
 
 }

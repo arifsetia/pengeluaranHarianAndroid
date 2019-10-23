@@ -1,106 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swiperefresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bd_blue"
-    tools:context=".MainActivity">
-    <LinearLayout
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="20dp"
-        android:orientation="horizontal">
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nested_scroll_view"
+            android:fitsSystemWindows="false"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:background="@drawable/header_white"
-            android:orientation="vertical"
-            android:padding="20dp">
+            android:layout_height="match_parent"
+            android:scrollbars="none"
+            android:scrollingCache="true">
 
-            <TextView
-                android:id="@+id/totKet"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:text="Total Pengeluaran Anda Bulan Ini"
-                android:textColor="#000000"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/totalPengeluaran"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Rp. 2500.000"
-                android:textColor="@color/blueColor"
-                android:textSize="35sp"
-                android:textStyle="bold" />
-
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="15dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="30dp">
+                    android:layout_margin="20dp"
+                    android:background="@drawable/header_white"
+                    android:orientation="vertical"
+                    android:padding="20dp">
 
                     <TextView
+                        android:id="@+id/totKet"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:text="Total Pengeluaran Anda Bulan Ini"
+                        android:textColor="#000000"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/totalPengeluaran"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Laporan Pengeluaran Lainnya"
-                        android:textColor="#000000"
-                        android:textSize="8sp" />
+                        android:layout_marginTop="10dp"
+                        android:text="Rp. 2500.000"
+                        android:textColor="@color/blueColor"
+                        android:textSize="35sp"
+                        android:textStyle="bold" />
+                    <RelativeLayout
+                        android:layout_gravity="right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp">
+
+                        <TextView
+                            android:id="@+id/txtPeng"
+                            android:layout_centerVertical="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="Laporan Pengeluaran Lainnya"
+                            android:textColor="#000000"
+                            android:textSize="8sp" />
+
+                        <ImageView
+                            android:layout_marginLeft="10dp"
+                            android:layout_toRightOf="@id/txtPeng"
+                            android:id="@+id/btnLaporanLainnya"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:src="@drawable/ic_arrow_forward_black_24dp" />
+
+                    </RelativeLayout>
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="20dp">
 
-                <ImageView
-                    android:id="@+id/btnLaporanLainnya"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:src="@drawable/ic_arrow_forward_black_24dp" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvPengeluaran"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                </LinearLayout>
 
-            </RelativeLayout>
-
-        </LinearLayout>
+            </LinearLayout>
 
 
+        </androidx.core.widget.NestedScrollView>
 
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="180dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="20dp">
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/swiperefresh"
+        <FrameLayout
+            android:id="@+id/fabFrame"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvPengeluaran"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-    </LinearLayout>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:src="@drawable/ic_add_black_24dp"
-        android:layout_margin="15dp"
-        app:fabSize="normal"
-        app:borderWidth="0dp"
-        app:elevation="6dp"
-        android:backgroundTint="#ffffff"
-        android:id="@+id/fab1"/>
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:orientation="vertical">
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:src="@drawable/ic_add_black_24dp"
+                android:layout_margin="15dp"
+                app:fabSize="normal"
+                app:borderWidth="0dp"
+                app:elevation="6dp"
+                android:backgroundTint="#ffffff"
+                android:id="@+id/fab1"/>
+        </FrameLayout>
 
 
-</FrameLayout>
+    </RelativeLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
