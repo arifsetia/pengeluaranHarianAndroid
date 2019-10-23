@@ -33,6 +33,11 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.DateFormat;
@@ -67,6 +72,8 @@ public class MainActivity extends AppCompatActivity  implements GroceryRecyclerV
 
     DatePickerDialog picker;
 
+    private AdView mAdView;
+
     Locale localeID = new Locale("in", "ID");
     private NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(localeID);
     private NestedScrollView nested_scrool_view;
@@ -81,6 +88,18 @@ public class MainActivity extends AppCompatActivity  implements GroceryRecyclerV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //admob
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        mAdView = findViewById(R.id.adView);
+        /*for test*/
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("323C4BAC43608B9E353C1E674F09F67C").build();
+//        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         nested_scrool_view = findViewById(R.id.nested_scroll_view);
 

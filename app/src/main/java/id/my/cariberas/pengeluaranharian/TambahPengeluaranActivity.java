@@ -14,6 +14,12 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -31,10 +37,24 @@ public class TambahPengeluaranActivity extends AppCompatActivity {
     DatabaseHelper dbHelper;
     Button btnSimpan;
 
+    private AdView mAdView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tambah_pengeluaran);
+
+        //admob
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        mAdView = findViewById(R.id.adView);
+        /*for test*/
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("323C4BAC43608B9E353C1E674F09F67C").build();
+//        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         dbHelper = new DatabaseHelper(this);
 
@@ -71,7 +91,6 @@ public class TambahPengeluaranActivity extends AppCompatActivity {
         btnSimpan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-
                 if (ePengeluaran.getText().toString().equals("") || eText.getText().toString().equals("") || eHarga.getText().toString().equals("")){
                     Toast.makeText(TambahPengeluaranActivity.this,"Semua Data Harus Diisi!", Toast.LENGTH_SHORT ).show();
                 }else {
@@ -112,6 +131,4 @@ public class TambahPengeluaranActivity extends AppCompatActivity {
         }
         return true;
     }
-
-
 }

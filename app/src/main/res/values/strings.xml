@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Pengeluaran Harian</string>
+    <string name="admob_interstitial_id">ca-app-pub-5131706815520893/5185405543</string>
 </resources>

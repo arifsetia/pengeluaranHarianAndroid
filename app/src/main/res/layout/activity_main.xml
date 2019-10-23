@@ -113,6 +113,18 @@
                 app:elevation="6dp"
                 android:backgroundTint="#ffffff"
                 android:id="@+id/fab1"/>
+            <com.google.android.gms.ads.AdView
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/adView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignWithParentIfMissing="true"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="bottom"
+                ads:adSize="SMART_BANNER"
+                ads:adUnitId="ca-app-pub-5131706815520893/5129409692">
+
+            </com.google.android.gms.ads.AdView>
         </FrameLayout>
 
 

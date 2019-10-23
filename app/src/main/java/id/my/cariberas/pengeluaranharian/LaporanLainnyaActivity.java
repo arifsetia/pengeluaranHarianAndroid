@@ -25,10 +25,6 @@ public class LaporanLainnyaActivity extends AppCompatActivity {
     EditText eText,eText2;
     Button btnLihat;
 
-    private Pattern pattern;
-    private Matcher matcher;
-    private static final String DATE_PATTERN = "(0?[1-9]|1[012]) [/.-] (0?[1-9]|[12][0-9]|3[01]) [/.-] ((19|20)\\d\\d)";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,14 +87,14 @@ public class LaporanLainnyaActivity extends AppCompatActivity {
                         tanggalAwal = eText.getText().toString();
                         tanggalAkhir = eText2.getText().toString();
 
-                        if(!isValidDate(eText.getText().toString()) || !isValidDate(eText2.getText().toString())){
-                            Toast.makeText(LaporanLainnyaActivity.this,"Gunakan format tanggal (YYYY-mm-dd)!", Toast.LENGTH_SHORT ).show();
-                        }else{
+//                        if(!isValidDate(eText.getText().toString()) || !isValidDate(eText2.getText().toString())){
+//                            Toast.makeText(LaporanLainnyaActivity.this,"Gunakan format tanggal (YYYY-mm-dd)!", Toast.LENGTH_SHORT ).show();
+//                        }else{
                             Intent i = new Intent(getApplicationContext(),DetailLaporanLainnya.class);
                             i.putExtra("tanggalAwal", tanggalAwal);
                             i.putExtra("tanggalAkhir", tanggalAkhir);
                             startActivity(i);
-                        }
+//                        }
                     }
                 }
             });
@@ -107,6 +103,7 @@ public class LaporanLainnyaActivity extends AppCompatActivity {
     public boolean isValidDate(String date)
     {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-mm-d");
         Date testDate = null;
         String errorMessage;
         try {
@@ -115,7 +112,7 @@ public class LaporanLainnyaActivity extends AppCompatActivity {
         catch (ParseException e) {
             return false;
         }
-        if (!sdf.format(testDate).equals(date))
+        if (!sdf.format(testDate).equals(date) || !sdf2.format(testDate).equals(date))
         {
             return false;
         }
