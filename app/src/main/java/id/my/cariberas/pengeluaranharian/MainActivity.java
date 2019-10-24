@@ -281,7 +281,17 @@ public class MainActivity extends AppCompatActivity  implements GroceryRecyclerV
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 //                                eText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-                                tanggalEdit.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+                                int month = monthOfYear + 1;
+                                String formattedMonthOfYear = "" + month;
+                                String formattedDayOfMonth = "" + dayOfMonth;
+                                if(month < 10){
+                                    formattedMonthOfYear = "0" + month;
+                                }
+                                if(dayOfMonth < 10){
+
+                                    formattedDayOfMonth  = "0" + dayOfMonth ;
+                                }
+                                tanggalEdit.setText(year + "-" + formattedMonthOfYear + "-" + formattedDayOfMonth);
                             }
                         }, year, month, day);
                 picker.show();
@@ -295,20 +305,67 @@ public class MainActivity extends AppCompatActivity  implements GroceryRecyclerV
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SQLiteDatabase db = dbcenter.getReadableDatabase();
-                ContentValues cv = new ContentValues();
-                cv.put("title", titleEdit.getText().toString());
-                cv.put("date", tanggalEdit.getText().toString());
-                cv.put("fee", feeEdit.getText().toString());
-                db.update("tb_pengeluaran", cv, "id_pengeluaran="+id_pengeluaran, null);
-                cursor.moveToFirst();
-                Toast.makeText(MainActivity.this, "Data Berhasil Diupdate", Toast.LENGTH_SHORT).show();
-                GetPengeluaranBulanIni();
-                RefreshList();
-                dialog.dismiss();
+                if(isValidDate(tanggalEdit.getText().toString())){
+                    SQLiteDatabase db = dbcenter.getReadableDatabase();
+                    ContentValues cv = new ContentValues();
+                    cv.put("title", titleEdit.getText().toString());
+                    cv.put("date", tanggalEdit.getText().toString());
+                    cv.put("fee", feeEdit.getText().toString());
+                    db.update("tb_pengeluaran", cv, "id_pengeluaran="+id_pengeluaran, null);
+                    cursor.moveToFirst();
+                    Toast.makeText(MainActivity.this, "Data Berhasil Diupdate", Toast.LENGTH_SHORT).show();
+                    GetPengeluaranBulanIni();
+                    RefreshList();
+                    dialog.dismiss();
+                }else{
+                    Toast.makeText(MainActivity.this, "Format tanggal salah!", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
         dialog.show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.share:
+
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                String shareBodyText = "Check it out. Your message goes here";
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,"Pencatatan Pengeluaran");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Yuk, Catat semua pengeluaran harian kamu di *Aplikasi Catatan Pengeluaran Harian*, Download dan install di http://ilang.in/appCatetPengeluaran");
+                startActivity(Intent.createChooser(sharingIntent, "Aplikasi Catatan Pengeluaran Harian"));
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public boolean isValidDate(String date)
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+        Date testDate = null;
+        String errorMessage;
+        try {
+            testDate = sdf.parse(date);
+        }
+        catch (ParseException e) {
+            return false;
+        }
+        if (!sdf.format(testDate).equals(date))
+        {
+            return false;
+        }
+        return true;
     }
 
 
