@@ -48,7 +48,17 @@ public class LaporanLainnyaActivity extends AppCompatActivity {
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                eText.setText(  year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+                                int month = monthOfYear + 1;
+                                String formattedMonth = "" + month;
+                                String formattedDayOfMonth = "" + dayOfMonth;
+                                if(month < 10){
+                                    formattedMonth = "0" + month;
+                                }
+                                if(dayOfMonth < 10){
+
+                                    formattedDayOfMonth  = "0" + dayOfMonth ;
+                                }
+                                eText.setText(  year + "-" + formattedMonth + "-" + formattedDayOfMonth);
                             }
                         }, year, month, day);
                 picker.show();
@@ -69,7 +79,16 @@ public class LaporanLainnyaActivity extends AppCompatActivity {
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                eText2.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+                                int month = monthOfYear + 1;
+                                String formattedMonth = "" + month;
+                                String formattedDayOfMonth = "" + dayOfMonth;
+                                if(month < 10){
+                                    formattedMonth = "0" + month;
+                                }
+                                if(dayOfMonth < 10){
+                                    formattedDayOfMonth  = "0" + dayOfMonth ;
+                                }
+                                eText2.setText(  year + "-" + formattedMonth + "-" + formattedDayOfMonth);
                             }
                         }, year, month, day);
                 picker.show();
@@ -83,18 +102,20 @@ public class LaporanLainnyaActivity extends AppCompatActivity {
                     if (eText.getText().toString().equals("") || eText2.getText().toString().equals("")){
                         Toast.makeText(LaporanLainnyaActivity.this,"Data tidak boleh kosong!!", Toast.LENGTH_SHORT ).show();
                     }else {
-                        String tanggalAwal, tanggalAkhir;
-                        tanggalAwal = eText.getText().toString();
-                        tanggalAkhir = eText2.getText().toString();
-
-//                        if(!isValidDate(eText.getText().toString()) || !isValidDate(eText2.getText().toString())){
-//                            Toast.makeText(LaporanLainnyaActivity.this,"Gunakan format tanggal (YYYY-mm-dd)!", Toast.LENGTH_SHORT ).show();
-//                        }else{
+                        if(!isValidDate(eText.getText().toString())){
+                            Toast.makeText(LaporanLainnyaActivity.this,"Format tanggal salah!!", Toast.LENGTH_SHORT ).show();
+                        }else if(!isValidDate(eText2.getText().toString())) {
+                            Toast.makeText(LaporanLainnyaActivity.this,"Format tanggal salah!!", Toast.LENGTH_SHORT ).show();
+                        } else{
+                            String tanggalAwal, tanggalAkhir;
+                            tanggalAwal = eText.getText().toString();
+                            tanggalAkhir = eText2.getText().toString();
                             Intent i = new Intent(getApplicationContext(),DetailLaporanLainnya.class);
                             i.putExtra("tanggalAwal", tanggalAwal);
                             i.putExtra("tanggalAkhir", tanggalAkhir);
                             startActivity(i);
-//                        }
+                        }
+
                     }
                 }
             });
@@ -103,7 +124,6 @@ public class LaporanLainnyaActivity extends AppCompatActivity {
     public boolean isValidDate(String date)
     {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
-        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-mm-d");
         Date testDate = null;
         String errorMessage;
         try {
@@ -112,7 +132,7 @@ public class LaporanLainnyaActivity extends AppCompatActivity {
         catch (ParseException e) {
             return false;
         }
-        if (!sdf.format(testDate).equals(date) || !sdf2.format(testDate).equals(date))
+        if (!sdf.format(testDate).equals(date))
         {
             return false;
         }

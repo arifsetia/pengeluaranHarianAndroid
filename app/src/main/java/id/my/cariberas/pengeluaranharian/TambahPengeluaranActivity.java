@@ -14,6 +14,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -38,11 +40,17 @@ public class TambahPengeluaranActivity extends AppCompatActivity {
     Button btnSimpan;
 
     private AdView mAdView;
+    //defining AwesomeValidation object
+    private AwesomeValidation awesomeValidation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tambah_pengeluaran);
+        awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
+
+
+        awesomeValidation.addValidation(this, R.id.btnTanggalTambah, "^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(\\/|-|\\.)(?:0?[1,3-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/|-|\\.)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$", R.string.dateerror);
 
         //admob
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
@@ -52,8 +60,8 @@ public class TambahPengeluaranActivity extends AppCompatActivity {
         });
         mAdView = findViewById(R.id.adView);
         /*for test*/
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice("323C4BAC43608B9E353C1E674F09F67C").build();
-//        AdRequest adRequest = new AdRequest.Builder().build();
+//        AdRequest adRequest = new AdRequest.Builder().addTestDevice("323C4BAC43608B9E353C1E674F09F67C").build();
+        AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
         dbHelper = new DatabaseHelper(this);
@@ -81,7 +89,17 @@ public class TambahPengeluaranActivity extends AppCompatActivity {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 //                                eText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-                                eText.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+                                int month = monthOfYear + 1;
+                                String formattedMonthOfYear = "" + month;
+                                String formattedDayOfMonth = "" + dayOfMonth;
+                                if(month < 10){
+                                    formattedMonthOfYear = "0" + month;
+                                }
+                                if(dayOfMonth < 10){
+
+                                    formattedDayOfMonth  = "0" + dayOfMonth ;
+                                }
+                                eText.setText(year + "-" + formattedMonthOfYear + "-" + formattedDayOfMonth);
                             }
                         }, year, month, day);
                 picker.show();
@@ -94,9 +112,7 @@ public class TambahPengeluaranActivity extends AppCompatActivity {
                 if (ePengeluaran.getText().toString().equals("") || eText.getText().toString().equals("") || eHarga.getText().toString().equals("")){
                     Toast.makeText(TambahPengeluaranActivity.this,"Semua Data Harus Diisi!", Toast.LENGTH_SHORT ).show();
                 }else {
-                    if(!isValidDate(eText.getText().toString())){
-                        Toast.makeText(TambahPengeluaranActivity.this,"Gunakan format tanggal (YYYY-mm-dd)!", Toast.LENGTH_SHORT ).show();
-                    }else{
+                    if(isValidDate(eText.getText().toString())){
 //                        Toast.makeText(TambahPengeluaranActivity.this,"cocok!", Toast.LENGTH_SHORT ).show();
                         // TODO Auto-generated method stub
                         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -108,6 +124,8 @@ public class TambahPengeluaranActivity extends AppCompatActivity {
                         MainActivity.ma.RefreshList();
                         MainActivity.ma.GetPengeluaranBulanIni();
                         finish();
+                    }else{
+                        Toast.makeText(TambahPengeluaranActivity.this,"Format tanggal salah!", Toast.LENGTH_SHORT ).show();
                     }
                 }
             }
