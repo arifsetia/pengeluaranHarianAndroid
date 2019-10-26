@@ -9,21 +9,22 @@ import android.os.Handler;
 import android.view.Window;
 
 public class SplashScreen extends AppCompatActivity {
+    private int waktu_loading=2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
         setContentView(R.layout.activity_splash_screen);
-
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+                //setelah loading maka akan langsung berpindah ke home activity
+                Intent home=new Intent(SplashScreen.this, MainActivity.class);
+                startActivity(home);
                 finish();
+
             }
-        }, 2000L); //3000 L = 3 detik
+        },waktu_loading);
     }
 }

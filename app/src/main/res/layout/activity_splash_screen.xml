@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bd_blue"
+    android:gravity="center"
+    android:layout_gravity="center"
     tools:context=".SplashScreen">
-        <ImageView
-            android:layout_gravity="center"
-            android:layout_width="250dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/flash"/>
         <TextView
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
+            android:id="@+id/titleSPlashScreen"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Versi 1.0"
-            android:layout_marginTop="70dp"
-            android:textColor="#ffffff"/>
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:text="Pengeluaran Harian"/>
 
-</FrameLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="versi 1.0.2"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:layout_below="@+id/titleSPlashScreen"/>
+</RelativeLayout>

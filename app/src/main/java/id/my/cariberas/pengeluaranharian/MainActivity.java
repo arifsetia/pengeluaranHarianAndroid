@@ -93,6 +93,8 @@ public class MainActivity extends AppCompatActivity  implements GroceryRecyclerV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         //admob
 //        MobileAds.initialize(this, new OnInitializationCompleteListener() {
 //            @Override
@@ -110,9 +112,28 @@ public class MainActivity extends AppCompatActivity  implements GroceryRecyclerV
         ma = this;
         dbcenter = new DatabaseHelper(this);
         GetPengeluaranBulanIni();
+        GetPengeluaranHariIni();
+        GetPengeluaranKemarin();
         RefreshList();
+
+
+
         //add
         FloatingActionButton floatingActionButton=findViewById(R.id.fab1);
+
+        fab = findViewById(R.id.fab1);
+
+        nested_scrool_view.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY > oldScrollY) {
+                    fab.hide();
+                } else {
+                    fab.show();
+                }
+            }
+        });
+
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -205,6 +226,60 @@ public class MainActivity extends AppCompatActivity  implements GroceryRecyclerV
         tTotalPengeluaran.setText(String.valueOf(formatRupiah.format(pengeluaranBulanIni)));
     }
 
+    public  void GetPengeluaranHariIni(){
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int pengeluaranHariIni;
+//        String hariini = "";
+
+        Date c = Calendar.getInstance().getTime();
+//        System.out.println("Current time => " + c);
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String hariini = df.format(c);
+
+        SQLiteDatabase db = dbcenter.getReadableDatabase();
+        String q = "SELECT SUM(fee) as jumlah from tb_pengeluaran where date = '"+hariini+"';";
+        Log.d("keluarin",q);
+        cursor = db.rawQuery(q, null);
+        if(cursor.moveToFirst())
+            pengeluaranHariIni = cursor.getInt(0);
+        else
+            pengeluaranHariIni = 0;
+        cursor.close();
+        TextView tTotalPengeluaran = findViewById(R.id.totalPengeluaranHariIni);
+        tTotalPengeluaran.setText(String.valueOf(formatRupiah.format(pengeluaranHariIni)));
+    }
+
+    public  void GetPengeluaranKemarin(){
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int pengeluaranHariIni;
+        String kemarin = "";
+
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        kemarin =  dateFormat.format(yesterday());
+
+        SQLiteDatabase db = dbcenter.getReadableDatabase();
+        String q = "SELECT SUM(fee) as jumlah from tb_pengeluaran where date = '"+kemarin+"';";
+        Log.d("keluarin",q);
+        cursor = db.rawQuery(q, null);
+        if(cursor.moveToFirst())
+            pengeluaranHariIni = cursor.getInt(0);
+        else
+            pengeluaranHariIni = 0;
+        cursor.close();
+        TextView tTotalPengeluaran = findViewById(R.id.totalPengeluaranKemarin);
+        tTotalPengeluaran.setText(String.valueOf(formatRupiah.format(pengeluaranHariIni)));
+    }
+
+    private Date yesterday() {
+        final Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -1);
+        return cal.getTime();
+    }
+
     @Override
     public void onRecyclerImageSelected(HashMap groceryList) {
         String xImg = groceryList.get("fee").toString();
@@ -220,6 +295,8 @@ public class MainActivity extends AppCompatActivity  implements GroceryRecyclerV
                 cursor.moveToFirst();
                 Toast.makeText(MainActivity.this, "Data Berhasil Dihapus", Toast.LENGTH_SHORT).show();
                 GetPengeluaranBulanIni();
+                GetPengeluaranHariIni();
+                GetPengeluaranKemarin();
                 RefreshList();
                 dialog.dismiss();
             }
@@ -314,6 +391,8 @@ public class MainActivity extends AppCompatActivity  implements GroceryRecyclerV
                     db.update("tb_pengeluaran", cv, "id_pengeluaran="+id_pengeluaran, null);
                     cursor.moveToFirst();
                     Toast.makeText(MainActivity.this, "Data Berhasil Diupdate", Toast.LENGTH_SHORT).show();
+                    GetPengeluaranHariIni();
+                    GetPengeluaranKemarin();
                     GetPengeluaranBulanIni();
                     RefreshList();
                     dialog.dismiss();

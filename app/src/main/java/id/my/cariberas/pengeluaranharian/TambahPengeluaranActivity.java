@@ -123,6 +123,8 @@ public class TambahPengeluaranActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Berhasil Disimpan", Toast.LENGTH_LONG).show();
                         MainActivity.ma.RefreshList();
                         MainActivity.ma.GetPengeluaranBulanIni();
+                        MainActivity.ma.GetPengeluaranHariIni();
+                        MainActivity.ma.GetPengeluaranKemarin();
                         finish();
                     }else{
                         Toast.makeText(TambahPengeluaranActivity.this,"Format tanggal salah!", Toast.LENGTH_SHORT ).show();
