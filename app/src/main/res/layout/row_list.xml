@@ -19,7 +19,6 @@
                 android:paddingBottom="2dip"
                 android:paddingTop="4dip"
                 android:textSize="16sp"
-                android:textStyle="bold"
                 android:textColor="#000000"
                 android:text="Nama" />
             <TextView
@@ -65,7 +64,7 @@
         android:orientation="vertical">
         <View
             android:layout_width="match_parent"
-            android:layout_height="1px"
+            android:layout_height="2px"
             android:background="#f1f1f1"/>
     </LinearLayout>
 

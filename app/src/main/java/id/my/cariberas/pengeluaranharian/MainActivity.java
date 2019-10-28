@@ -209,7 +209,7 @@ public class MainActivity extends AppCompatActivity  implements GroceryRecyclerV
         String q = "SELECT strftime('%m', date) as valMonth, \n" +
                 "SUM(fee) as valTotalMonth \n" +
                 "FROM tb_pengeluaran \n" +
-                "WHERE strftime('%Y', date)='"+year+"' GROUP BY valMonth;";
+                "WHERE category = 'pengeluaran' and strftime('%Y', date)='"+year+"' GROUP BY valMonth;";
         Log.d("keluarin",q);
         cursor = db.rawQuery(q, null);
         if(cursor.moveToFirst())
@@ -234,7 +234,7 @@ public class MainActivity extends AppCompatActivity  implements GroceryRecyclerV
         String hariini = df.format(c);
 
         SQLiteDatabase db = dbcenter.getReadableDatabase();
-        String q = "SELECT SUM(fee) as jumlah from tb_pengeluaran where date = '"+hariini+"';";
+        String q = "SELECT SUM(fee) as jumlah from tb_pengeluaran where category = 'pengeluaran' and date = '"+hariini+"';";
         Log.d("keluarin",q);
         cursor = db.rawQuery(q, null);
         if(cursor.moveToFirst())
@@ -257,7 +257,7 @@ public class MainActivity extends AppCompatActivity  implements GroceryRecyclerV
         kemarin =  dateFormat.format(yesterday());
 
         SQLiteDatabase db = dbcenter.getReadableDatabase();
-        String q = "SELECT SUM(fee) as jumlah from tb_pengeluaran where date = '"+kemarin+"';";
+        String q = "SELECT SUM(fee) as jumlah from tb_pengeluaran where category = 'pengeluaran' and date = '"+kemarin+"';";
         Log.d("keluarin",q);
         cursor = db.rawQuery(q, null);
         if(cursor.moveToFirst())
