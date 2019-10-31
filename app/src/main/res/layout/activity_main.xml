@@ -9,11 +9,13 @@
     android:background="@color/blueColor"
     android:fillViewport="true"
     android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         android:orientation="vertical">
+
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nested_scroll_view"
@@ -23,11 +25,24 @@
             android:scrollbars="none"
             android:scrollingCache="true">
 
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        android:minHeight="?attr/actionBarSize"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/blueColor"
+                        >
+                    </androidx.appcompat.widget.Toolbar>
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -159,6 +174,7 @@
                         android:id="@+id/rvPengeluaran"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:minHeight="600dp"
                         />
                 </LinearLayout>
             </LinearLayout>
