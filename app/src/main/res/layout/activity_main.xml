@@ -6,7 +6,8 @@
     android:id="@+id/swiperefresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
+    android:background="@color/blueColor"
+    android:fillViewport="true"
     android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -24,13 +25,13 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/header_white"
+                    android:background="@drawable/header_blue"
                     android:orientation="vertical"
                     android:padding="20dp">
 
@@ -38,24 +39,27 @@
                         android:id="@+id/totKet"
                         android:layout_width="200dp"
                         android:layout_height="wrap_content"
-                        android:text="Total Pengeluaran Anda Bulan Ini"
-                        android:textColor="#000000"
-                        android:textSize="12sp" />
+                        android:text="Pengeluaran Bulan Ini"
+                        android:textColor="#ffffff"
+                        android:textSize="8sp" />
 
                     <TextView
                         android:id="@+id/totalPengeluaran"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:textColor="#ffffff"
                         android:text="Rp. 2500.000"
-                        android:textColor="@color/blueColor"
                         android:textSize="35sp"
                         android:textStyle="bold" />
                     <RelativeLayout
                         android:layout_gravity="right"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp">
+                        android:paddingTop="1dp"
+                        android:paddingBottom="1dp"
+                        android:paddingLeft="3dp"
+                        android:paddingRight="3dp"
+                        android:background="@drawable/rounded_laporan_lainnya">
 
                         <TextView
                             android:id="@+id/txtPeng"
@@ -63,7 +67,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="Laporan Pengeluaran Lainnya"
-                            android:textColor="#000000"
+                            android:textColor="@color/blueColor"
                             android:textSize="8sp" />
 
                         <ImageView
@@ -76,93 +80,89 @@
 
                     </RelativeLayout>
                 </LinearLayout>
-
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="#ffffff"
-                    android:layout_marginTop="10dp"
-                    android:paddingRight="12dp"
-                    android:paddingLeft="12dp"
-                    android:paddingTop="18dp"
-                    android:paddingBottom="18dp">
-
-                    <TextView
-                        android:id="@+id/totKetHariIni"
-                        android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        android:text="Hari Ini"
-                        android:textColor="#000000"
-                        android:textSize="10sp" />
-
-                    <TextView
-                        android:id="@+id/totalPengeluaranHariIni"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Rp. 2500.000"
-                        android:textColor="#000000"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="#ffffff"
-                    android:layout_marginTop="10dp"
-                    android:paddingRight="12dp"
-                    android:paddingLeft="12dp"
-                    android:paddingTop="18dp"
-                    android:paddingBottom="18dp">
-
-
-                    <TextView
-                        android:id="@+id/totKetKemarin"
-                        android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        android:text="Kemarin"
-                        android:textColor="#000000"
-                        android:textSize="10sp" />
-
-                    <TextView
-                        android:id="@+id/totalPengeluaranKemarin"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Rp. 2500.000"
-                        android:textColor="#000000"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Pengeluaran Hari ini"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="3dp"
-                    android:textStyle="bold"
-                    android:layout_marginLeft="12dp"
-                    />
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@color/blueColor"
+                        android:paddingRight="12dp"
+                        android:paddingLeft="20dp"
+                        android:paddingBottom="18dp">
+                        <TextView
+                            android:id="@+id/totKetHariIni"
+                            android:layout_width="200dp"
+                            android:layout_height="wrap_content"
+                            android:text="Hari Ini"
+                            android:textColor="#ffffff"
+                            android:textSize="8sp" />
+                        <TextView
+                            android:id="@+id/totalPengeluaranHariIni"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Rp. 2500.000"
+                            android:textColor="#ffffff"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@color/blueColor"
+                        android:paddingRight="12dp"
+                        android:paddingLeft="12dp"
+                        android:paddingBottom="18dp">
+                        <TextView
+                            android:id="@+id/totKetKemarin"
+                            android:layout_width="200dp"
+                            android:layout_height="wrap_content"
+                            android:text="Kemarin"
+                            android:textColor="#ffffff"
+                            android:textSize="8sp" />
+                        <TextView
+                            android:id="@+id/totalPengeluaranKemarin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Rp. 2500.000"
+                            android:textColor="#ffffff"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#ffffff"
-                    android:layout_marginTop="10dp">
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:background="@drawable/rounded_top">
+                    <View
+                        android:layout_width="45dp"
+                        android:layout_height="10px"
+                        android:layout_marginTop="20dp"
+                        android:layout_gravity="center"
+                        android:background="#f1f1f1"/>
+                    <View
+                        android:layout_width="45dp"
+                        android:layout_height="10px"
+                        android:layout_marginTop="5dp"
+                        android:layout_gravity="center"
+                        android:background="#f1f1f1"/>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvPengeluaran"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="match_parent"
+                        />
                 </LinearLayout>
-
             </LinearLayout>
-
-
         </androidx.core.widget.NestedScrollView>
-
         <FrameLayout
             android:id="@+id/fabFrame"
             android:layout_width="match_parent"

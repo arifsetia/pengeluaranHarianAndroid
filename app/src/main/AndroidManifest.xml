@@ -29,7 +29,8 @@
         <activity android:name=".editData" />
         <activity android:name=".LaporanLainnyaActivity" />
         <activity android:name=".TambahPengeluaranActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity"
+            android:theme="@style/Theme.Design.Light.NoActionBar"/>
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
