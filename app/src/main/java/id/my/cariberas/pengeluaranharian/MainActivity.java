@@ -15,6 +15,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.InputType;
@@ -99,8 +100,9 @@ public class MainActivity extends AppCompatActivity  implements GroceryRecyclerV
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         //toolbar.setNavigationIcon(R.drawable.ic_toolbar);
-        toolbar.setTitle("");
-        toolbar.setSubtitle("");
+//        toolbar.setTitle("");
+//        toolbar.setTitleTextColor(Color.WHITE);
+//        toolbar.setSubtitle("");
 
         Window window = getWindow();
 
