@@ -99,20 +99,16 @@ public class MainActivity extends AppCompatActivity  implements GroceryRecyclerV
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        //toolbar.setNavigationIcon(R.drawable.ic_toolbar);
-//        toolbar.setTitle("");
-//        toolbar.setTitleTextColor(Color.WHITE);
-//        toolbar.setSubtitle("");
 
         Window window = getWindow();
 
-// clear FLAG_TRANSLUCENT_STATUS flag:
+        // clear FLAG_TRANSLUCENT_STATUS flag:
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
-// add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+        // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 
-// finally change the color
+        // finally change the color
         window.setStatusBarColor(getResources().getColor(R.color.blueColor));
 
         //admob
@@ -135,8 +131,6 @@ public class MainActivity extends AppCompatActivity  implements GroceryRecyclerV
         GetPengeluaranHariIni();
         GetPengeluaranKemarin();
         RefreshList();
-
-
 
         //add
         FloatingActionButton floatingActionButton=findViewById(R.id.fab1);
@@ -188,15 +182,6 @@ public class MainActivity extends AppCompatActivity  implements GroceryRecyclerV
         SQLiteDatabase db = dbcenter.getReadableDatabase();
         cursor = db.rawQuery("SELECT * FROM tb_pengeluaran where category = 'pengeluaran'  order by id_pengeluaran DESC LIMIT 50", null);
         cursor.moveToFirst();
-        //groceryArrayList = new ArrayList<>();
-
-        /*for (int cc = 0; cc < cursor.getCount(); cc++) {
-            cursor.moveToPosition(cc);
-            try {
-                groceryArrayList.add(new Grocery(cursor.getString(0), cursor.getString(1), formatRupiah.format(Integer.parseInt(cursor.getString(3))), cursor.getString(2)));
-            } catch (Exception e) {
-            }
-        }*/
 
         ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
         for (int cc = 0; cc < cursor.getCount(); cc++) {
@@ -251,10 +236,8 @@ public class MainActivity extends AppCompatActivity  implements GroceryRecyclerV
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int pengeluaranHariIni;
-//        String hariini = "";
 
         Date c = Calendar.getInstance().getTime();
-//        System.out.println("Current time => " + c);
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String hariini = df.format(c);
@@ -277,7 +260,6 @@ public class MainActivity extends AppCompatActivity  implements GroceryRecyclerV
         int year = calendar.get(Calendar.YEAR);
         int pengeluaranHariIni;
         String kemarin = "";
-
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         kemarin =  dateFormat.format(yesterday());
@@ -334,10 +316,6 @@ public class MainActivity extends AppCompatActivity  implements GroceryRecyclerV
 
     public void onRecyclerLongClick(HashMap groceryList){
 
-//        dialog = new AlertDialog.Builder(MainActivity.this);
-//        inflater = getLayoutInflater();
-//        dialogView = inflater.inflate(R.layout.activity_edit_data, null);
-
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         LayoutInflater inflater = getLayoutInflater();
@@ -357,7 +335,6 @@ public class MainActivity extends AppCompatActivity  implements GroceryRecyclerV
         String[] separated = currentString.split(". ");
         final String feeBaru = separated[1].trim();
 
-        //        EditText id_pengeluaran_edit = dialogView.findViewById(R.id.tPengeluaranEdit);
         final EditText titleEdit = dialogView.findViewById(R.id.tPengeluaranEdit);
         final EditText feeEdit = dialogView.findViewById(R.id.tHargaEdit);
         final EditText tanggalEdit = dialogView.findViewById(R.id.tTanggalEdit);
@@ -467,7 +444,5 @@ public class MainActivity extends AppCompatActivity  implements GroceryRecyclerV
         }
         return true;
     }
-
-
 
 }
