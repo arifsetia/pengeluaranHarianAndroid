@@ -229,12 +229,13 @@ public class MainActivity extends AppCompatActivity  implements GroceryRecyclerV
     public void GetPengeluaranBulanIni(){
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH)+1;
         int pengeluaranBulanIni;
         SQLiteDatabase db = dbcenter.getReadableDatabase();
         String q = "SELECT strftime('%m', date) as valMonth, \n" +
                 "SUM(fee) as valTotalMonth \n" +
                 "FROM tb_pengeluaran \n" +
-                "WHERE category = 'pengeluaran' and strftime('%Y', date)='"+year+"' GROUP BY valMonth;";
+                "WHERE category = 'pengeluaran' and strftime('%Y', date)='"+year+"' and strftime('%m', date)='"+month+"' GROUP BY valMonth;";
         Log.d("keluarin",q);
         cursor = db.rawQuery(q, null);
         if(cursor.moveToFirst())
