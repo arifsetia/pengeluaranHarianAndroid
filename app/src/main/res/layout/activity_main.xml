@@ -195,7 +195,8 @@
                 app:fabSize="normal"
                 app:borderWidth="0dp"
                 app:elevation="6dp"
-                android:backgroundTint="#ffffff"
+                app:rippleColor="@color/blueColor"
+                android:backgroundTint="@color/yellowColor"
                 android:id="@+id/fab1"/>
 <!--            <com.google.android.gms.ads.AdView-->
 <!--                xmlns:ads="http://schemas.android.com/apk/res-auto"-->

@@ -9,6 +9,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:minHeight="?attr/actionBarSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/blueColor"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Catatan Pengeluaran"
+                    android:layout_gravity="center"
+                    android:textColor="@color/whiteColor"/>
+            </androidx.appcompat.widget.Toolbar>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

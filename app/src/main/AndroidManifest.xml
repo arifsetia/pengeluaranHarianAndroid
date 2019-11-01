@@ -25,10 +25,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DetailLaporanLainnya" />
+        <activity android:name=".DetailLaporanLainnya"
+            android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity android:name=".editData" />
-        <activity android:name=".LaporanLainnyaActivity" />
-        <activity android:name=".TambahPengeluaranActivity" />
+        <activity android:name=".LaporanLainnyaActivity"
+            android:theme="@style/Theme.Design.Light.NoActionBar"/>
+        <activity android:name=".TambahPengeluaranActivity"
+            android:theme="@style/Theme.Design.Light.NoActionBar"/>
         <activity android:name=".MainActivity"
             android:theme="@style/Theme.Design.Light.NoActionBar"/>
 
