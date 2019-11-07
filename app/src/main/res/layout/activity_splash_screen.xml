@@ -7,21 +7,22 @@
     android:gravity="center"
     android:layout_gravity="center"
     tools:context=".SplashScreen">
-        <TextView
-            android:id="@+id/titleSPlashScreen"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#ffffff"
-            android:textStyle="bold"
-            android:textSize="20dp"
+            android:layout_height="match_parent"
             android:gravity="center"
-            android:text="Pengeluaran Harian"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="versi 1.0.5"
-            android:textAlignment="center"
-            android:textColor="#ffffff"
-            android:layout_below="@+id/titleSPlashScreen"/>
+            android:background="@color/whiteColor"
+            android:orientation="vertical">
+                <ImageView
+            android:id="@+id/titleSPlashScreen"
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            android:src="@drawable/icon_catetan"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="by Cari Beras"
+                    android:textAlignment="center"
+                    android:layout_below="@+id/titleSPlashScreen"/>
+        </LinearLayout>
 </RelativeLayout>
