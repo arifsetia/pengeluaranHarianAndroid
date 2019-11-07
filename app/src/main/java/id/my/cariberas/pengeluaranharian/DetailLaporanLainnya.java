@@ -94,8 +94,8 @@ public class DetailLaporanLainnya extends AppCompatActivity implements GroceryRe
         // finally change the color
         window.setStatusBarColor(getResources().getColor(R.color.blueColor));
 
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice("323C4BAC43608B9E353C1E674F09F67C").build();
-//        AdRequest adRequest = new AdRequest.Builder().build();
+//        AdRequest adRequest = new AdRequest.Builder().addTestDevice("323C4BAC43608B9E353C1E674F09F67C").build();
+        AdRequest adRequest = new AdRequest.Builder().build();
 
         // Prepare the Interstitial Ad
         interstitial = new InterstitialAd(DetailLaporanLainnya.this);

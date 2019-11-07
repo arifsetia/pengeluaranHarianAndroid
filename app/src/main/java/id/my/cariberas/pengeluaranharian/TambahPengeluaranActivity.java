@@ -88,8 +88,8 @@ public class TambahPengeluaranActivity extends AppCompatActivity {
         });
         mAdView = findViewById(R.id.adView);
         /*for test*/
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice("323C4BAC43608B9E353C1E674F09F67C").build();
-//        AdRequest adRequest = new AdRequest.Builder().build();
+//        AdRequest adRequest = new AdRequest.Builder().addTestDevice("323C4BAC43608B9E353C1E674F09F67C").build();
+        AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
         dbHelper = new DatabaseHelper(this);

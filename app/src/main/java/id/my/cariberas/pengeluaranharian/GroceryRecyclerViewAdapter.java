@@ -47,7 +47,7 @@ public class GroceryRecyclerViewAdapter extends RecyclerView.Adapter<GroceryRecy
     @Override
     public void onBindViewHolder(@NonNull GroceryViewHolder groceryViewHolder, int i) {
         HashMap xData = groceryList.get(i);
-        String xtgl = formateDateFromstring("yyyy-mm-dd", "EEE, dd/mm/yy", xData.get("date").toString());
+        String xtgl = formateDateFromstring("yyyy-mm-dd", "dd/mm/yy", xData.get("date").toString());
         groceryViewHolder.title.setText(xData.get("title").toString());
         groceryViewHolder.fee.setText(xData.get("fee").toString());
         groceryViewHolder.tanggal.setText(xtgl);
