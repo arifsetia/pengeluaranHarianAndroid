@@ -11,7 +11,7 @@ import android.view.Window;
 import android.widget.TextView;
 
 public class SplashScreen extends AppCompatActivity {
-    private int waktu_loading=10000;
+    private int waktu_loading=2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
