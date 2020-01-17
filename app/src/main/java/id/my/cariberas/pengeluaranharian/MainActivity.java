@@ -215,13 +215,18 @@ public class MainActivity extends AppCompatActivity  implements GroceryRecyclerV
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH)+1;
+        Log.d("bulan", Integer.toString(month));
         int pengeluaranBulanIni;
         SQLiteDatabase db = dbcenter.getReadableDatabase();
+        String month1 = Integer.toString(month);
+        if(month < 10){
+             month1 = "0"+month;
+        }
         String q = "SELECT strftime('%m', date) as valMonth, \n" +
                 "SUM(fee) as valTotalMonth \n" +
                 "FROM tb_pengeluaran \n" +
-                "WHERE category = 'pengeluaran' and strftime('%Y', date)='"+year+"' and strftime('%m', date)='"+month+"' GROUP BY valMonth;";
-        Log.d("keluarin",q);
+                "WHERE category = 'pengeluaran' and strftime('%Y', date)='"+year+"' and strftime('%m', date)='"+month1+"' GROUP BY valMonth;";
+        Log.d("keluarin2",q);
         cursor = db.rawQuery(q, null);
         if(cursor.moveToFirst())
             pengeluaranBulanIni = cursor.getInt(1);
